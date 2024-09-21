@@ -19,8 +19,8 @@ const getOrders = async (req, res) => {
 const getOrderById = async (req, res) => {
 
     const { _id } = req.user; // see authentificate.js 31 row
-    const { descriptionId } = req.params;
-    const result = await Descriptions.find({owner: _id, _id: descriptionId});
+    const { orderId } = req.params;
+    const result = await Orders.find({owner: _id, _id: orderId});
 
     if (result === null || result.length === 0) throw HttpError(404, "Not found");
       
@@ -31,7 +31,7 @@ const getOrderById = async (req, res) => {
 const addOrder = async (req, res) => {
     
     const { body } = req;
-    const { error } = schemas.descriptionSchema.validate(body.data);
+    const { error } = schemas.orderSchema.validate(body.data);
   
     // check body data second variant
     if (error) {
@@ -49,7 +49,7 @@ const addOrder = async (req, res) => {
    
     const { _id } = req.user; 
   
-    const result = await Descriptions.create({...body.data, owner: _id});
+    const result = await Orders.create({...body.data, owner: _id});
 
     res.status(201).json({ message: `Created` });
 
@@ -62,7 +62,7 @@ const updateOrderById = async (req, res) => {
   
     const { body } = req;
 
-    const { error } = schemas.descriptionSchema.validate(body.data);
+    const { error } = schemas.orderSchema.validate(body.data);
     
     if (error) {
       throw HttpError(
@@ -77,12 +77,12 @@ const updateOrderById = async (req, res) => {
     }
     
     // find by 'owner' and id and update
-    const result = await Descriptions.findOneAndUpdate({owner: _id, _id: id}, body.data, {new: true});
+    const result = await Orders.findOneAndUpdate({owner: _id, _id: id}, body.data, {new: true});
    
     if (result === null) {
       throw HttpError(404, "Not found");
     }
-    res.status(201).json({ message: `Description ${result.descriptionName} updated` });
+    res.status(201).json({ message: `Orders ${result.descriptionName} updated` });
 
 };
 
@@ -92,15 +92,15 @@ const deleteOrderById = async (req, res) => {
     
     const { id } = req.query;
    
-    const descriptionName = await Descriptions.findOne({owner: _id, _id: id});
+    const orderName = await Orders.findOne({owner: _id, _id: id});
     // find by owner and id and delete
-    const result = await Descriptions.findOneAndDelete({owner: _id, _id: id});
+    const result = await Orders.findOneAndDelete({owner: _id, _id: id});
 
     if (result === null) {
       throw HttpError(404, "Not found");
     }
 
-    res.status(200).json({ message: `Description ${descriptionName.descriptionName} deleted` });
+    res.status(200).json({ message: `Orders ${descriptionName.descriptionName} deleted` });
 };
 
 module.exports = {
