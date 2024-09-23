@@ -31,7 +31,7 @@ const getOrderById = async (req, res) => {
 const addOrder = async (req, res) => {
     
     const { body } = req;
-    const { error } = schemas.orderSchema.validate(body.data);
+    const { error } = schemas.orderSchem.validate(body.data);
   
     // check body data second variant
     if (error) {
@@ -62,7 +62,7 @@ const updateOrderById = async (req, res) => {
   
     const { body } = req;
 
-    const { error } = schemas.orderSchema.validate(body.data);
+    const { error } = schemas.orderSchem.validate(body.data);
     
     if (error) {
       throw HttpError(
@@ -82,7 +82,7 @@ const updateOrderById = async (req, res) => {
     if (result === null) {
       throw HttpError(404, "Not found");
     }
-    res.status(201).json({ message: `Orders ${result.descriptionName} updated` });
+    res.status(201).json({ message: `Orders ${result.orderName} updated` });
 
 };
 
@@ -100,7 +100,7 @@ const deleteOrderById = async (req, res) => {
       throw HttpError(404, "Not found");
     }
 
-    res.status(200).json({ message: `Orders ${descriptionName.descriptionName} deleted` });
+    res.status(200).json({ message: `Orders ${orderName.orderName} deleted` });
 };
 
 module.exports = {

@@ -1,7 +1,7 @@
 const express = require('express');
-const { validateBody, authentificate } = require('../../middlewares');
+const { validateBody } = require('../../middlewares');
 
-const controllers = require('../../controllers/prescription');
+const controllers = require('../../controllers/orders');
 
 // joi schemas
 const schemas = require('../../schemas');
@@ -9,12 +9,11 @@ const schemas = require('../../schemas');
 // create most routes
 const pillsRouter = express.Router();
 
-pillsRouter.get("/", authentificate, controllers.getAll);
-pillsRouter.get("/:id", authentificate, controllers.getById);
-pillsRouter.post("/", authentificate, validateBody(schemas.prescriptionSchema), controllers.addById);
-pillsRouter.put("/:id", authentificate, validateBody(schemas.prescriptionSchema), controllers.updateById);
-pillsRouter.patch("/", authentificate, validateBody(schemas.patchSchema), controllers.changeById);
-pillsRouter.delete("/", authentificate, validateBody(schemas.prescriptionSchema), controllers.deleteById);
+pillsRouter.get("/", controllers.getOrders);
+pillsRouter.get("/:id", controllers.getOrderById);
+pillsRouter.post("/", validateBody(schemas.orderSchem), controllers.addOrder);
+pillsRouter.put("/:id", validateBody(schemas.orderSchem), controllers.updateOrderById);
+pillsRouter.delete("/", validateBody(schemas.orderSchem), controllers.deleteOrderById);
 
 // export to app
 module.exports = pillsRouter;

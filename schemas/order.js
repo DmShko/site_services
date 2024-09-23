@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-const orderSchema = Joi.object({
+const orderSchem = Joi.object({
   _id: Joi.string().required(),
   orderName: Joi.string().allow(''),
   orderQuantity: Joi.string().required(),
@@ -9,4 +9,4 @@ const orderSchema = Joi.object({
   description: Joi.string().allow(''),
 });
 
-module.exports = { orderSchema };
+module.exports = { orderSchem };

@@ -8,7 +8,7 @@ require('dotenv').config();
 
 // import routers
 const shopRouter = require('./routes/api/shop');
-const authRouter = require('./routes/api/auth');
+// const authRouter = require('./routes/api/auth');
 
 // create server 'pills'
 const shop = express();
@@ -18,7 +18,7 @@ shop.use(express.json());
 shop.use(express.static('public'));
 
 //on each get typeof '/api/pills' go to 'pillsRouter'
-shop.use('/api/auth', authRouter);
+// shop.use('/api/auth', authRouter);
 shop.use('/api/shop', shopRouter);
 
 shop.use((req, res) => {
